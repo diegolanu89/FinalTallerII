@@ -31,7 +31,7 @@ export default class TemperaturaService {
     );
 
     if (colisiones.length > 0) {
-      EmailService.notificarVuelo({ id, xa, ya, za });
+      EmailService.notificarPosiblesCoalisiones(id,colisiones);
       return {
         mensaje: "Vuelo guardado y alertado",
         colisiones,

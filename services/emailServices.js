@@ -4,18 +4,21 @@ import logger from "../utils/logger.js";
 farenheit,*/
 
 export default class EmailService {
-  static notificarTemperaturaImposible({ temperatura, tipo }) {
+  static notificarPosiblesCoalisiones( id ,colisiones) {
     logger.warn(
-      `[ALERTA CIENTÍFICA] Temperatura imposible registrada: ${temperatura} ${tipo}.`
+      `[ALERTA COALISIÓN] Coalisiónes posibles registrada para el vuelo: ${id}`
     );
     logger.warn(
-      `(Simulación) Email enviado a: administrador@gmail.com con asunto: "¡Temperatura imposible detectada!"`
+      ` COALISIÓNES] Coalisiónes posibles rcon los siguientes vuelos: ${colisiones}`
+    );
+    logger.warn(
+      `(Simulación) Email enviado a: administrador@gmail.com con asunto: "¡Coalisiónes posibles detectadas!"`
     );
   }
 
   static notificarVuelo(vuelo){
     logger.warn(
-      `[ALERTA VUELO] `
+      `[ALERTA COLISIONES] `
     );
   }
 }

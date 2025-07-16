@@ -9,6 +9,7 @@ Este proyecto fue desarrollado como parte del **Examen Final** correspondiente a
 - 📊 Cálculo automático de colisiones entre vuelos a menos de 500 metros de distancia
 - 🔔 Notificación simulada por consola en caso de riesgo de colisión
 - 🔢 Validación estricta de datos: ID de vuelo con 3 letras + 3 números y coordenadas numéricas
+-    Logs con Winston
 
 ## 🧪 Tests
 
