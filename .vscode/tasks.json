@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "npm: dev",
+        "type": "npm",
+        "script": "dev",
+        "group": "build"
+      },
+      {
+        "label": "npm: test",
+        "type": "npm",
+        "script": "test",
+        "group": "test"
+      },
+      {
+        "label": "npm: coverage",
+        "type": "npm",
+        "script": "coverage",
+        "group": "test"
+      },
+      {
+        "label": "run-all",
+        "dependsOn": ["npm: dev", "npm: test", "npm: coverage"],
+        "dependsOrder": "parallel",
+        "problemMatcher": [],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      }
+    ]
+  }
+  

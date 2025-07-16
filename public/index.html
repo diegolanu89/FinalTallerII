@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Vuelos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    #resultado {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <h1 class="text-center mb-4">Sistema de Control de Vuelos</h1>
+
+    <div class="row g-4">
+      <!-- Agregar vuelo -->
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5 class="card-title">Agregar / Actualizar Vuelo</h5>
+            <form id="formAgregar">
+              <input type="text" class="form-control mb-2" placeholder="ID (ej: ABC123)" id="agregarId" required />
+              <input type="number" class="form-control mb-2" placeholder="xa" id="agregarXa" required />
+              <input type="number" class="form-control mb-2" placeholder="ya" id="agregarYa" required />
+              <input type="number" class="form-control mb-2" placeholder="za" id="agregarZa" required />
+              <button class="btn btn-primary w-100" type="submit">Enviar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eliminar vuelo -->
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5 class="card-title">Eliminar Vuelo</h5>
+            <form id="formEliminar">
+              <input type="text" class="form-control mb-2" placeholder="ID (ej: ABC123)" id="eliminarId" required />
+              <button class="btn btn-danger w-100" type="submit">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Listado -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5 class="card-title">Listado de Vuelos</h5>
+            <button class="btn btn-secondary mb-3" onclick="listarVuelos()">Listar Vuelos</button>
+            <pre id="resultado" class="bg-light p-3 border rounded"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alertas -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999">
+      <div id="alertPlaceholder"></div>
+    </div>
+  </div>
+
+  <script>
+    const apiUrl = "http://localhost:8080/api/vuelos";
+
+    const showAlert = (message, type = "success") => {
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+      `;
+      document.getElementById("alertPlaceholder").append(wrapper);
+      setTimeout(() => wrapper.remove(), 4000);
+    };
+
+    document.getElementById("formAgregar").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("agregarId").value.trim();
+      const xa = parseFloat(document.getElementById("agregarXa").value);
+      const ya = parseFloat(document.getElementById("agregarYa").value);
+      const za = parseFloat(document.getElementById("agregarZa").value);
+
+      const res = await fetch(`${apiUrl}/agregar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, xa, ya, za }),
+      });
+      const data = await res.json();
+      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+
+      if (res.ok) {
+        showAlert("Vuelo agregado/actualizado correctamente.");
+      } else {
+        showAlert(data.errorMsg || "Error al agregar vuelo", "danger");
+      }
+    });
+
+    document.getElementById("formEliminar").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("eliminarId").value.trim();
+
+      const res = await fetch(`${apiUrl}/eliminar`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const data = await res.json();
+      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+
+      if (res.ok) {
+        showAlert("Vuelo eliminado correctamente.");
+      } else {
+        showAlert(data.errorMsg || "Error al eliminar vuelo", "danger");
+      }
+    });
+
+    async function listarVuelos() {
+      const res = await fetch(`${apiUrl}/listar`);
+      const data = await res.json();
+      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+      showAlert("Listado actualizado.");
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

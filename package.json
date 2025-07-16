@@ -1,0 +1,32 @@
+{
+  "type": "module",
+  "name": "parcial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js --ignore /*.json",
+    "start:file": "MODO_PERSISTENCIA=FILE nodemon app.js",
+    "start:mem": "MODO_PERSISTENCIA=MEM nodemon app.js",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "nodemon": "^3.1.10",
+    "vitest": "^3.2.4",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4"
+  }
+}
