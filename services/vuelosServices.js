@@ -3,7 +3,7 @@ import logger from "../utils/logger.js";
 import EmailService from "./emailServices.js";
 import { ValidadorVuelos } from "./validadorVuelos.js";
 
-export default class TemperaturaService {
+export default class VuelosServices {
   constructor(persistencia) {
     this.persistencia = ModelFactory.get(persistencia);
   }

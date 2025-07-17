@@ -1,8 +1,5 @@
 import logger from "../utils/logger.js";
 
-/*En caso de registrar una temperatura menor a: 0 kelvin ó -273 celsius ó -460
-farenheit,*/
-
 export default class EmailService {
   static notificarPosiblesCoalisiones( id ,colisiones) {
     logger.warn(
